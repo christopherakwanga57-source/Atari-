@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mobile Gas Refill Order Flow</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+h1 {
+  color: #ff9900;
+}
+
+.step {
+  margin-bottom: 30px;
+}
+
+.step h2 {
+  border-bottom: 2px solid #ff9900;
+  padding-bottom: 6px;
+}
+
+.slider-box {
+  text-align: center;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.kg-display {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.checkbox {
+  margin: 8px 0;
+}
+
+button {
+  background: #ff9900;
+  border: none;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.secondary {
+  background: #ddd;
+}
+
+.card {
+  background: #eef5ff;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+}
+
+.meter {
+  background: #000;
+  color: #0f0;
+  padding: 15px;
+  font-family: monospace;
+  font-size: 22px;
+  text-align: center;
+}
+
+.complete {
+  background: #e9ffe9;
+  padding: 15px;
+  border-left: 4px solid green;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🔥 Mobile Gas Refill</h1>
+
+<!-- STEP 1 -->
+<div class="step">
+<h2>Step 1: Select KG Needed</h2>
+
+<div class="slider-box">
+  <input type="range" min="1" max="50" value="5" id="kgSlider" oninput="updateKG()" />
+  <div class="kg-display">
+    <span id="kgValue">5</span> kg
+  </div>
+  <p>Price: ₦<span id="price">3,750</span></p>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+<h2>Step 2: Confirm Access Area</h2>
+<div class="checkbox">
+  <label><input type="checkbox"> Space available</label>
+</div>
+<div class="checkbox">
+  <label><input type="checkbox"> Ventilation okay</label>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+<h2>Step 3: Schedule Time</h2>
+<label><input type="radio" name="time" checked>  20 mins</label><br>
+</div>
+
+<!-- STEP 4 -->
+<div class="step" id="techStep" style="display:none">
+<h2>Step 4: Technician Assigned</h2>
+<div class="card">
+  👨‍🔧 Technician: John A.<br>
+  🚚 Mobile Refill Van Assigned<br>
+  📍 En route to your location
+</div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step" id="meterStep" style="display:none">
+<h2>Step 5: Live Meter Tracking</h2>
+<div class="meter">
+  KG DISPENSED: <span id="meterKG">0.0</span> kg
+</div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step" id="paymentStep" style="display:none">
+<h2>Step 6: Payment & Completion</h2>
+<label><input type="radio" name="pay"> Bank Transfer</label><br>
+<label><input type="radio" name="pay"> Mobile Money</label><br>
+<label><input type="radio" name="pay"> Pay on Completion</label><br>
+
+<button onclick="completeOrder()">Complete Order</button>
+
+<div class="complete" id="completeBox" style="display:none">
+  ✔ Gas dispensed successfully<br>
+  ✔ Meter verified<br>
+  ✔ Payment confirmed<br>
+  🎉 Order completed
+</div>
+</div>
+
+<button onclick="startOrder()">Start Refill</button>
+
+</div>
+
+<script>
+let kg = 5;
+let pricePerKg = 750;
+let dispensed = 0;
+let meterInterval;
+
+function updateKG() {
+  kg = document.getElementById("kgSlider").value;
+  document.getElementById("kgValue").innerText = kg;
+  document.getElementById("price").innerText = kg * pricePerKg;
+}
+
+function startOrder() {
+  document.getElementById("techStep").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("meterStep").style.display = "block";
+    startMeter();
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById("paymentStep").style.display = "block";
+  }, 6000);
+}
+
+function startMeter() {
+  meterInterval = setInterval(() => {
+    if (dispensed < kg) {
+      dispensed += 0.5;
+      document.getElementById("meterKG").innerText = dispensed.toFixed(1);
+    } else {
+      clearInterval(meterInterval);
+    }
+  }, 800);
+}
+
+function completeOrder() {
+  document.getElementById("completeBox").style.display = "block";
+}
+</script>
+
+</body>
+</html>

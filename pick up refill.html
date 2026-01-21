@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pickup & Refill Order Flow</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+h1 {
+  color: #ff9900;
+}
+
+.step {
+  margin-bottom: 30px;
+}
+
+.step h2 {
+  border-bottom: 2px solid #ff9900;
+  padding-bottom: 5px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.card.active {
+  border-color: #ff9900;
+  background: #fff6e0;
+}
+
+button {
+  background: #ff9900;
+  border: none;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.secondary {
+  background: #ddd;
+}
+
+.tracking-box {
+  background: #eef5ff;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+}
+
+.status {
+  margin: 8px 0;
+}
+
+.complete {
+  background: #e9ffe9;
+  padding: 15px;
+  border-left: 4px solid green;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🚚 Pickup & Refill Order</h1>
+
+<!-- STEP 1 -->
+<div class="step">
+<h2>Step 1: Select Cylinder Size</h2>
+
+<div class="card" onclick="selectSize('3kg',3000)">
+  <strong>3kg</strong> – ₦3,000
+</div>
+
+<div class="card" onclick="selectSize('6kg',5500)">
+  <strong>6kg</strong> – ₦5,500
+</div>
+
+<div class="card" onclick="selectSize('12.5kg',8000)">
+  <strong>12.5kg</strong> – ₦8,000
+</div>
+
+<div class="card" onclick="selectSize('25kg',16000)">
+  <strong>25kg</strong> – ₦16,000
+</div>
+
+<div class="card" onclick="selectSize('50kg',32000)">
+  <strong>50kg</strong> – ₦32,000
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+<h2>Step 2: Pickup Time</h2>
+<label><input type="radio" name="pickup" checked> 20mins</label><br>
+
+<!-- STEP 3 -->
+<div class="step">
+<h2>Step 3: Estimated Refill Duration</h2>
+<p><strong>Estimated:</strong> 1 – 2 hours</p>
+<p>This includes pickup, refilling, and return delivery.</p>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+<h2>Step 4: Payment (Full)</h2>
+<label><input type="radio" name="pay"> Bank Transfer</label><br>
+<label><input type="radio" name="pay"> Mobile Money</label><br><br>
+<button onclick="confirmPayment()">Pay & Place Order</button>
+</div>
+
+<!-- STEP 5 -->
+<div class="step" id="trackingStep" style="display:none">
+<h2>Step 5: Tracking</h2>
+<div class="tracking-box">
+  <div class="status">🚚 Pickup Rider Assigned</div>
+  <div class="status">📍 Cylinder Picked Up</div>
+  <div class="status">🔥 Cylinder at Refill Station</div>
+  <div class="status">🔄 Refill in Progress</div>
+  <div class="status">🏠 Returning to You</div>
+</div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step" id="completeStep" style="display:none">
+<h2>Step 6: Delivery Confirmation</h2>
+<div class="complete">
+  <p>✔ Cylinder refilled successfully</p>
+  <p>✔ Safety seal verified</p>
+  <p>✔ Delivered to customer</p>
+</div>
+<button onclick="alert('Order Completed Successfully')">
+Confirm Delivery
+</button>
+</div>
+
+</div>
+
+<script>
+let selectedSize = "";
+let price = 0;
+
+function selectSize(size, p) {
+  selectedSize = size;
+  price = p;
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+}
+
+function confirmPayment() {
+  if (!selectedSize) {
+    alert("Please select cylinder size");
+    return;
+  }
+  document.getElementById("trackingStep").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("completeStep").style.display = "block";
+  }, 4000);
+}
+</script>
+
+</body>
+</html>

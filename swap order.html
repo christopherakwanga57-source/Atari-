@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Swap Cylinder Order Flow</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+  margin: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+}
+
+h2 {
+  border-bottom: 2px solid #ff9900;
+  padding-bottom: 5px;
+}
+
+.step {
+  margin-bottom: 25px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.card.active {
+  border-color: #ff9900;
+  background: #fff7e6;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.qty {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background: #ff9900;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #ddd;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  margin-right: 8px;
+}
+
+.tracking {
+  background: #eef6ff;
+  padding: 15px;
+  border-left: 4px solid #007bff;
+}
+
+.qr {
+  background: #eee;
+  padding: 20px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🔁 Swap Cylinder Order</h1>
+
+<!-- STEP 1 -->
+<div class="step">
+<h2>Step 1: Select Cylinder Size</h2>
+
+<div class="card" onclick="selectSize('3kg',3500,'45 mins')">
+  <div class="row">
+    <strong>3kg</strong>
+    <span>₦3,500 • 45 mins</span>
+  </div>
+</div>
+
+<div class="card" onclick="selectSize('6kg',6500,'45–60 mins')">
+  <div class="row">
+    <strong>6kg</strong>
+    <span>₦6,500 • 45–60 mins</span>
+  </div>
+</div>
+
+<div class="card" onclick="selectSize('12.5kg',9500,'60 mins')">
+  <div class="row">
+    <strong>12.5kg</strong>
+    <span>₦9,500 • 60 mins</span>
+  </div>
+</div>
+
+<div class="card" onclick="selectSize('25kg',18500,'90 mins')">
+  <div class="row">
+    <strong>25kg</strong>
+    <span>₦18,500 • 90 mins</span>
+  </div>
+</div>
+
+<div class="card" onclick="selectSize('50kg',36000,'2 hrs')">
+  <div class="row">
+    <strong>50kg</strong>
+    <span>₦36,000 • 2 hrs</span>
+  </div>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step">
+<h2>Step 2: Quantity</h2>
+<div class="qty">
+  <button onclick="changeQty(-1)">−</button>
+  <span id="qty">1</span>
+  <button onclick="changeQty(1)">+</button>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step">
+<h2>Step 3: Delivery Time</h2>
+<label><input type="radio" name="time" checked> 20 mins</label><br>
+</div>
+
+<!-- STEP 4 -->
+<div class="step">
+<h2>Step 4: Safety Confirmation</h2>
+<label><input type="checkbox"> I will exchange an empty cylinder</label><br>
+<label><input type="checkbox"> Cylinder is in good condition</label><br>
+<label><input type="checkbox"> I agree to safety terms</label>
+</div>
+
+<!-- STEP 5 -->
+<div class="step">
+<h2>Step 5: Payment Method</h2>
+<label><input type="radio" name="pay"> Bank Transfer</label><br>
+<label><input type="radio" name="pay"> Mobile Money</label><br>
+<button onclick="placeOrder()">Place Order</button>
+</div>
+
+<!-- STEP 6 -->
+<div class="step" id="trackingStep" style="display:none">
+<h2>Step 6: Order Tracking</h2>
+<div class="tracking">
+  <p>🚴 Rider Assigned</p>
+  <p>📍 Live GPS Tracking</p>
+  <p>⏱ ETA: <span id="eta">55 mins</span></p>
+  <button class="secondary">🚨 Emergency</button>
+</div>
+</div>
+
+<!-- STEP 7 -->
+<div class="step" id="completeStep" style="display:none">
+<h2>Step 7: Delivery Confirmation</h2>
+<div class="qr">QR CODE SCAN</div>
+<p>✔ Empty cylinder collected</p>
+<p>✔ Safety seal verified</p>
+<button onclick="alert('Order Completed Successfully')">
+Complete Order
+</button>
+</div>
+
+</div>
+
+<script>
+let selectedSize = "";
+let price = 0;
+let qty = 1;
+
+function selectSize(size, p, time) {
+  selectedSize = size;
+  price = p;
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+}
+
+function changeQty(val) {
+  qty = Math.max(1, qty + val);
+  document.getElementById("qty").innerText = qty;
+}
+
+function placeOrder() {
+  if (!selectedSize) {
+    alert("Please select cylinder size");
+    return;
+  }
+  document.getElementById("trackingStep").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("completeStep").style.display = "block";
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

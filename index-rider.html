@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GasMart – Cooking Gas Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">GasMart</div>
+
+  <input type="text" id="search" placeholder="Search gas stations or cylinder size..." />
+
+  <div class="header-actions">
+      <a href="rider profile.html">
+    <button>Hi, john (Rider)</button>
+    </a>
+       <button class="cart-btn">Orders(<span id="cartCount">0</span>)</button>            
+  </div>
+</header>
+
+<!-- CATEGORY BAR -->
+<nav class="category-bar">
+  <button onclick="filterService('all')">All</button>
+  <button onclick="filterService('swap')">Swap Cylinder</button>
+  <button onclick="filterService('pickup')">Pickup & Refill</button>
+  <button onclick="filterService('mobile')">Mobile Refill</button>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="container">
+  <h2>Available Gas Stations Near You</h2>
+
+  <div class="grid" id="productGrid">
+
+    <!-- Product Card -->
+   
+      <div class="card" data-service="swap">
+      <img src="https://via.placeholder.com/200" />
+      <h3>Abc gas station</h3>
+      <p>Service: swap refill cylinder </p>
+        <p>wuse 2 Abuja  (Nigeria)</p>
+      <p>1kg - NGN1200</p>
+    <span class="star" onclick="setRating(1)">★</span>
+    <span class="star" onclick="setRating(2)">★</span>
+    <span class="star" onclick="setRating(3)">★</span>
+    <span class="star" onclick="setRating(4)">★</span>
+    <span class="star" onclick="setRating(5)">★</span>
+
+  <p>Rating: <span id="ratingValue">5</span>/5</p>
+      <a href="swap order.html">
+      <button onclick="addToCart('ABC Gas Station','Swap Cylinder')">
+        Order Now
+      </button>
+      </a>
+    </div>
+
+    <div class="card" data-service="pickup">
+      <img src="https://via.placeholder.com/200" />
+      <h3>EnergyPlus Gas</h3>
+      <p>Service: Pickup & Drop-off Refill</p>
+        <p>cape town  (South Africa)</p>
+      <p>1kg - ZAR4</p>
+    <span class="star" onclick="setRating(1)">★</span>
+    <span class="star" onclick="setRating(2)">★</span>
+    <span class="star" onclick="setRating(3)">★</span>
+    <span class="star" onclick="setRating(4)">★</span>
+    <span class="star" onclick="setRating(5)">★</span>
+
+  <p>Rating: <span id="ratingValue">2</span>/5</p>
+      <a href="pick up refill.html">
+      <button onclick="addToCart('ABC Gas Station','Swap Cylinder')">
+        Order Now
+      </button>
+      </a>
+    </div>
+
+    <div class="card" data-service="mobile">
+      <img src="https://via.placeholder.com/200" />
+      <h3>QuickFill Mobile Gas</h3>
+      <p>Service: Mobile Refill</p>
+        <p>location: accra  (Ghana)</p>
+      <p>1Kg – GHS6</p>
+    <span class="star" onclick="setRating(1)">★</span>
+    <span class="star" onclick="setRating(2)">★</span>
+    <span class="star" onclick="setRating(3)">★</span>
+    <span class="star" onclick="setRating(4)">★</span>
+    <span class="star" onclick="setRating(5)">★</span>
+  <p>Rating: <span id="ratingValue">3</span>/5</p>
+      <a href="mobile.html">
+ <button onclick="addToCart('ABC Gas Station','Swap Cylinder')">
+        Order Now
+        
+    </div>    
+      </a>
+  </div>
+</main>
+<main class="container hidden" id="orders">
+  <h2>My Orders</h2>
+
+  <div id="orderList">
+    <p>No orders yet.</p>
+  </div>
+</main>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 GasMart Africa – Cooking Gas Delivered to Your Doorstep</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

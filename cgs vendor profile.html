@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vendor – Gas Station App</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+}
+
+h1 {
+  color: #ff9900;
+}
+
+.layout {
+  display: flex;
+  gap: 20px;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #f5f5f5;
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sidebar button.active {
+  background: #ff9900;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 10px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+}
+
+button.action {
+  background: #ff9900;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.order {
+  border-left: 4px solid #007bff;
+}
+
+.alert {
+  background: #fff4e5;
+  border-left: 4px solid #ff9900;
+  padding: 10px;
+}
+
+.success {
+  background: #e9ffe9;
+  border-left: 4px solid green;
+  padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>🏪 Vendor Dashboard</h1>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <button class="active" onclick="showSection('onboarding')">Vendor Onboarding</button>
+  <button onclick="showSection('dashboard')">Dashboard</button>
+  <button onclick="showSection('orders')">Order Flow</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ONBOARDING -->
+<div class="section active" id="onboarding">
+  <h2>Vendor Onboarding</h2>
+
+  <div class="card">
+    <label>Business Name</label>
+    <input type="text" placeholder="Gas Station Name">
+
+    <label>Business Phone</label>
+    <input type="tel" placeholder="+234...">
+
+    <label>Plant Address</label>
+    <input type="text" placeholder="Full plant address">
+
+    <label>License Upload</label>
+    <input type="file">
+
+    <label>Cylinder Sizes Available</label>
+    <select multiple>
+      <option>3kg</option>
+      <option>6kg</option>
+      <option>12.5kg</option>
+      <option>25kg</option>
+      <option>50kg</option>
+    </select>
+
+    <button class="action" onclick="alert('Onboarding Submitted')">
+      Submit for Verification
+    </button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="section" id="dashboard">
+  <h2>Vendor Dashboard</h2>
+
+  <div class="card">
+    <strong>📦 New Orders:</strong> 3
+  </div>
+
+  <div class="card">
+    <strong>🔥 Inventory Status</strong>
+    <p>12.5kg – 45 available</p>
+    <p>25kg – 20 available</p>
+    <p>50kg – 10 available</p>
+  </div>
+
+  <div class="card">
+    <strong>💰 Earnings</strong>
+    <p>Today: ₦120,000</p>
+    <p>This Month: ₦3,400,000</p>
+  </div>
+
+  <div class="card alert">
+    ⚠ Compliance Alert: License renewal due in 14 days
+  </div>
+</div>
+
+<!-- ORDER FLOW -->
+<div class="section" id="orders">
+  <h2>Order Flow</h2>
+
+  <div class="card order">
+    <p><strong>Order #1023</strong></p>
+    <p>Service: Swap Cylinder – 12.5kg</p>
+    <p>Customer: John D.</p>
+
+    <button class="action" onclick="acceptOrder(this)">
+      Accept Order
+    </button>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".sidebar button").forEach(b => b.classList.remove("active"));
+
+  document.getElementById(id).classList.add("active");
+  event.target.classList.add("active");
+}
+
+function acceptOrder(btn) {
+  btn.parentElement.innerHTML = `
+    <p><strong>Order Accepted</strong></p>
+    <p>✔ Rider Assigned</p>
+    <p>✔ Cylinder Prepared</p>
+    <button class="action" onclick="markDispatched(this)">
+      Mark as Dispatched
+    </button>
+  `;
+}
+
+function markDispatched(btn) {
+  btn.parentElement.innerHTML = `
+    <div class="success">
+      🚚 Order Dispatched Successfully
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
